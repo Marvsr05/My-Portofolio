@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Futuristic background -->
+<div class="futuristic-bg">
+  <div class="ring-1"></div>
+  <div class="ring-2"></div>
+  <div class="line-1"></div>
+  <div class="line-2"></div>
+  <div class="grid-overlay"></div>
+</div>
+
+<!-- Geometric shapes background -->
+<div class="geometric-shapes"></div>
+
+<!-- Futuristic car element -->
+<div class="futuristic-car"></div>
+<div class="futuristic-car-left"></div>
+
+<!-- Futuristic rocket -->
+<div class="futuristic-rocket"></div>
+
+<!-- Math logo -->
+<div class="math-logo"></div>
+
+<!-- Additional futuristic elements -->
+<div class="futuristic-elements"></div>
+
+<header>
+  <h1>Contact</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="myportofolio.html">Projects</a>
+    <a class="active" href="kontak.html">Contact</a>
+    <span onclick="toggleDark()" style="cursor:pointer;">🌙</span>
+  </nav>
+</header>
+
+<!-- Contact Section -->
+<section class="contact-section">
+  <h2>Get In Touch</h2>
+  <div class="contact-grid">
+    <div class="contact-card email-card">
+      <div class="contact-icon">📧</div>
+      <h3>Primary Email</h3>
+      <p class="contact-detail">aamarvsr@gmail.com</p>
+      <button class="contact-btn copy-btn" onclick="copyText('aamarvsr@gmail.com')">
+        <span class="btn-text">Copy Email</span>
+        <span class="btn-icon">📋</span>
+      </button>
+    </div>
+
+    <div class="contact-card email-card">
+      <div class="contact-icon">🎓</div>
+      <h3>Academic Email</h3>
+      <p class="contact-detail">marvel.suryanegara@binus.ac.id</p>
+      <button class="contact-btn copy-btn" onclick="copyText('marvel.suryanegara@binus.ac.id')">
+        <span class="btn-text">Copy Email</span>
+        <span class="btn-icon">📋</span>
+      </button>
+    </div>
+
+    <div class="contact-card whatsapp-card">
+      <div class="contact-icon">💬</div>
+      <h3>WhatsApp</h3>
+      <p class="contact-detail">+62 838-5448-5889</p>
+      <button class="contact-btn whatsapp-btn" onclick="openWA()">
+        <span class="btn-text">Start Chat</span>
+        <span class="btn-icon">🚀</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Message Form Section -->
+<section class="message-section">
+  <h2>Kirim Pesan</h2>
+  <p class="message-intro">Punya ide kolaborasi atau butuh diskusi? Kirim pesan langsung ke saya!</p>
+  
+  <div class="message-form-container">
+    <form id="messageForm" class="message-form">
+      <div class="form-group">
+        <label for="senderName">Nama Lengkap *</label>
+        <input type="text" id="senderName" name="senderName" placeholder="Masukkan nama Anda" required>
+      </div>
+
+      <div class="form-group">
+        <label for="senderEmail">Email *</label>
+        <input type="email" id="senderEmail" name="senderEmail" placeholder="Masukkan email Anda" required>
+      </div>
+
+      <div class="form-group">
+        <label for="senderPhone">Nomor HP *</label>
+        <input type="tel" id="senderPhone" name="senderPhone" placeholder="Contoh: 0812-3456-7890" required>
+      </div>
+
+      <div class="form-group">
+        <label for="messageContent">Pesan *</label>
+        <textarea id="messageContent" name="messageContent" placeholder="Jelaskan kebutuhan, kolaborasi, atau kerja sama Anda..." rows="6" required></textarea>
+      </div>
+
+      <button type="submit" class="btn add" style="width: 100%;">
+        <span>Kirim Pesan</span>
+        <span style="margin-left: 8px;">📤</span>
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills-section">
+  <h2>Keahlian</h2>
+  <div class="skills-grid">
+    <div class="skill-item">Matematika</div>
+    <div class="skill-item">Video editing</div>
+    <div class="skill-item">Fotografer</div>
+    <div class="skill-item">Multimedia</div>
+    <div class="skill-item">Programming (dasar)</div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="script.js"></script>
+
+<script>
+  // ===== MESSAGE FORM HANDLER =====
+  document.getElementById('messageForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('senderName').value;
+    const email = document.getElementById('senderEmail').value;
+    const phone = document.getElementById('senderPhone').value;
+    const message = document.getElementById('messageContent').value;
+    
+    try {
+      // Save message to Supabase
+      const { data, error } = await client.from('messages').insert([
+        {
+          sender_name: name,
+          sender_email: email,
+          sender_phone: phone,
+          message_content: message
+        }
+      ]);
+      
+      if(error) {
+        console.error('Error saving message:', error);
+        showToast('❌ Gagal mengirim pesan. Coba lagi!');
+        return;
+      }
+      
+      // Show success toast
+      showToast(`✅ Pesan dari ${name} terkirim! Terima kasih sudah menghubungi saya.`);
+      
+      // Send to WhatsApp (optional)
+      const whatsappMessage = `Halo Marvel! Saya ${name}.\n\nKontak: ${email}\nNo HP: ${phone}\n\nPesan: ${message}`;
+      const whatsappLink = `https://wa.me/6283854485889?text=${encodeURIComponent(whatsappMessage)}`;
+      
+      // Reset form
+      this.reset();
+      
+      // Ask to send via WhatsApp too
+      setTimeout(() => {
+        if(confirm('Ingin juga mengirim via WhatsApp untuk response lebih cepat?')) {
+          window.open(whatsappLink, '_blank');
+        }
+      }, 1000);
+    } catch(err) {
+      console.error('Error:', err);
+      showToast('❌ Terjadi kesalahan. Coba lagi!');
+    }
+  });
+</script>
+</html>

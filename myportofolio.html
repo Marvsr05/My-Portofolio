@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Futuristic background -->
+<div class="futuristic-bg">
+  <div class="ring-1"></div>
+  <div class="ring-2"></div>
+  <div class="line-1"></div>
+  <div class="line-2"></div>
+  <div class="grid-overlay"></div>
+</div>
+
+<!-- Geometric shapes background -->
+<div class="geometric-shapes"></div>
+
+<!-- Futuristic car elements -->
+<div class="futuristic-car"></div>
+<div class="futuristic-car-left"></div>
+
+<!-- Futuristic rocket -->
+<div class="futuristic-rocket"></div>
+
+<!-- Math logo -->
+<div class="math-logo"></div>
+
+<!-- Additional futuristic elements -->
+<div class="futuristic-elements"></div>
+
+<!-- Futuristic car element -->
+<div class="futuristic-car"></div>
+
+<!-- Additional futuristic elements -->
+<div class="futuristic-elements"></div>
+
+<header>
+  <h1>Projects</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a class="active" href="myportofolio.html">Projects</a>
+    <a href="kontak.html">Contact</a>
+    <span onclick="toggleDark()" style="cursor:pointer;">🌙</span>
+  </nav>
+</header>
+
+<input id="title" placeholder="Title">
+<input id="desc" placeholder="Description">
+<button class="add" onclick="addProject()">Add</button>
+
+<div id="projectList"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
